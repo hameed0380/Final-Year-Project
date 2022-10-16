@@ -11,3 +11,7 @@ This week I have created some sketches for a simple temporary gui which will be 
 After doing some research, I decided that installing sublime text to use as an IDE to construct the graphical interface would be the best option. 
 
 After some experimentation I have found that doing the project in python would be the best idea particularly for producing visual genetic algorithms.
+
+# Week 10-16
+This week I have created a simple GUI in tkiniter for the project, I ahve done some experimentation with the features and widgets available and have an idea of how I want the GUI to look like. I have also started creating simple Genetic algorithms and am looking particularly at the TSP.
+
