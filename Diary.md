@@ -13,5 +13,9 @@ After doing some research, I decided that installing sublime text to use as an I
 After some experimentation I have found that doing the project in python would be the best idea particularly for producing visual genetic algorithms.
 
 # Week 10-16
-This week I have created a simple GUI in tkiniter for the project, I ahve done some experimentation with the features and widgets available and have an idea of how I want the GUI to look like. I have also started creating simple Genetic algorithms and am looking particularly at the TSP.
+This week I have created a simple GUI in tkiniter for the project, I have done some experimentation with the features and widgets available and have an idea of how I want the GUI to look like. I have also started creating simple Genetic algorithms and am looking particularly at the TSP.
 
+# Week 17-23
+During this week I created a simple genetic algorithm to understand how they work and how it can be applied to the project. I also did some research and a write up on genetic algorithms to form the basis of my report.
+
+# Week 24-30
