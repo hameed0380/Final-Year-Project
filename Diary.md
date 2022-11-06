@@ -23,5 +23,5 @@ For this week I have started creating the TSP genetic algorithm. From creating a
 
 
 # Week 31-6
-o far this week I have worked on the TSP genetic algorithm and am close to finishing it up. I have found that it is much better to use a class for this program rather then a series of methods. I have also updated the style and the layout of the report. Overall, I have made quite some progress this week, but I have to admit that more can be done, this was in large part due to multiple submittions and deadlines for my dat analysis module which has been quite tricky. Going forward I intend to work even more on the project. I have also now included the project plan making it easier to access and work of on.
+So far this week I have worked on the TSP genetic algorithm and am close to finishing it up. I have found that it is much better to use a class for this program rather then a series of methods. I have also updated the style and the layout of the report. Overall, I have made quite some progress this week, but I have to admit that more can be done, this was in large part due to multiple submittions and deadlines for my dat analysis module which has been quite tricky. Going forward I intend to work even more on the project. I have also now included the project plan making it easier to access and work of on.
 
