@@ -26,6 +26,7 @@ class City:
         return self.to_string()
 
 
+# current fitness
 # Use class for fitness function to define inverse of route
 class FitnessFunc:
     def __init__(self, route):
@@ -37,3 +38,21 @@ class FitnessFunc:
         if self.distance ==0:
             routDis = 0
             lenRoute = len(self.route)
+            for n in range(0, len(lenRoute)):
+                fromCity = self.route[n]
+                toCity = None
+                if n+1 < lenRoute:
+                    toCity = self.route[n+1]
+                else:
+                    toCity = self.route[0]
+                routDis += fromCity.distance(toCity)
+            self.distance = routDis
+        return self.distance
+
+
+    def routeFitness(self):
+        if self.fitness == 0:
+            self.fitness = 1 / float(self.routeDistance())
+        return self.fitness
+
+        # Look for another fitness function
