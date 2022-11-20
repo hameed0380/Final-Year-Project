@@ -28,3 +28,27 @@ So far this week I have worked on the TSP genetic algorithm and am close to fini
 
 # Week 7-13
 This week I worked more on thhe report adding sections to do with genetic algorithms such as the introduction and other apects nasmely being theory of coalescence, genetic drift and encoding. Also added a little bit of code.
+
+
+# Week 14-20
+This week I was slightly confused with the remaining part of the genetic algorithm so I decided to take a step back and do more research. Moving on from this I also worked on the report adding to the technical section as well as genetic drift and design pattterns.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
