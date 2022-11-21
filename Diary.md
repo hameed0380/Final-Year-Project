@@ -31,7 +31,7 @@ This week I worked more on thhe report adding sections to do with genetic algori
 
 
 # Week 14-20
-This week I was slightly confused with the remaining part of the genetic algorithm so I decided to take a step back and do more research. Moving on from this I also worked on the report adding to the technical section as well as genetic drift and design pattterns.
+This week I was slightly confused with the remaining part of the genetic algorithm so I decided to take a step back and do more research. Moving on from this I also worked on the report adding to the technical section as well as genetic drift and design pattterns. Upon further research I have now concluded that doing the majority of the project in tkinter is not viable and requires more time then provided. So I decided I will be doing the visualisation portion of the project in pygame for now.
 
 
 
