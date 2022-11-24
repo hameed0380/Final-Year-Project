@@ -1,10 +1,17 @@
 import numpy as np
+import random
+import math
+import operator
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 # For the TSP a gene in this case would be a city with its coordinates.
 # The x and y represent the coordinates for the city.
 class City:
-    def __init__(self, node, x, y):
-        self.node = int(node)
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
     # Retrieves x
     def getx(self):
@@ -48,7 +55,7 @@ class FitnessFunc:
         if self.distance ==0:
             routDis = 0
             lenRoute = len(self.route)
-            for n in range(0, len(lenRoute)):
+            for n in range(0, lenRoute):
                 fromCity = self.route[n]
                 toCity = None
                 if n+1 < lenRoute:
@@ -68,3 +75,88 @@ class FitnessFunc:
 
         # Look for another fitness function
 
+
+# Here is an alternative fitness function 
+# this fitness function makes use of inverse total distance
+
+# def total_fitness(total_d):
+#     if total_d!=0.0:
+#         #make fitness inverse of total distance
+#         fitness = 10000000000000000.0/ total_d
+#     else:
+#         print("Total distance cannot be zero. Check again")
+#         sys.exit()
+#     return fitness
+
+
+# Generate popultation
+
+# Randomly creating the routes for initial generation in pop
+def genRouter(num_city):
+    size = len(num_city)
+    route1 = random.sample(num_city, size)
+    return route1
+
+# Creation of inital pop
+# pop sample, only used for first instance
+def initialize_pop(pop_size, num_city):
+    pop = []
+    for i in range(0, pop_size):
+        pop.append(genRouter(c_list))
+    return pop
+
+
+# Crossover of parents to produce a new generation
+def crossover_phase(parent_a, parent_b):
+    offspring = []
+    offspringA = []
+    offspringB = []
+
+    # gene from parents set to random values i.e use of random lib
+    gene_fromA = int(random.random()* len(parent_a))
+    gene_fromB = int(random.random()* len(parent_b))
+
+    # Start and end gene set  for sequencing
+    Beg_Seq = min(gene_fromA, gene_fromB)
+    End_Seq = max(gene_fromA, gene_fromB)
+
+    for i in range(Beg_Seq, End_Seq):
+        offspringA.append(gene_fromA[i])
+    offspringB = [item for item in a if item not in chioffspringAldA]
+    # getting both genes from parents
+    offspring = offspringA + offspringB
+    return offspring
+
+# will have a set mutation rate, route1 is retrieved from route generated above
+def mutation_phase(route1, mutate_rate):
+    # Set mutation rate outside, cannot set inside loop
+    lenRoute = len(route1) # size route
+
+    # swapping arround for mutations with random element
+    for swap in range(lenRoute):
+        if (mutate_rate > random.random()):
+            swappedInd = int(random.random() * lenRoute)
+            # Had to replace was getting out of index error
+            # swappedInd = int(random.random() * lenRoute)
+
+            # Swapping around
+            swapped1 = route1[swap]
+            swapped2 = route1[swappedInd]
+
+            route1[swap] = swapped2
+            route1[swappedInd] = swapped1
+    return route1
+
+
+# Simple selection process rather then using dataframe
+# less complex and achieves the same outcome
+def selection(rank, bestsize):
+    selectionResults = []
+    result = []
+
+    for i in rank:
+        result.append(i[0])
+    for i in range(0, bestsize):
+        selectionResults.append(result[i])
+    
+    return selectionResults
