@@ -34,7 +34,8 @@ This week I worked more on thhe report adding sections to do with genetic algori
 This week I was slightly confused with the remaining part of the genetic algorithm so I decided to take a step back and do more research. Moving on from this I also worked on the report adding to the technical section as well as genetic drift and design pattterns. Upon further research I have now concluded that doing the majority of the project in tkinter is not viable and requires more time then provided. So I decided I will be doing the visualisation portion of the project in pygame for now.
 
 
-
+# Week 21-27
+This week I have worked towarsd getting a basic TSP genetic algorithm completed, this will further reinforce my knowledge and help me with the processes that take place in evolutionary algorithms. I feel ill with covid so for some days I was not able to complete worked as best as I feel I could but I am on track now.
 
 
 
