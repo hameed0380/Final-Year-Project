@@ -5,13 +5,12 @@ import operator
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Creating this genetic algorithm for the TSP has helped me to 
+# understand how they work by employing a series of phases backed
+# by evolution we can create generations and see how they survive.
 
-''' Creating this genetic algorithm for the TSP has helped me to 
-understand how they work by employing a series of phases backed
-by evolution we can create generations and see how they survive.
+# This serves as the base reference for my genetic algorithm.
 
-This serves as the base reference for my genetic algorithm.
-'''
 
 
 # For the TSP a gene in this case would be a city with its coordinates(x, y).
@@ -31,26 +30,26 @@ class City:
    
     # Calculates the Euclidean distance between 2 points (cities)
     # Decided from research this was the best metric for distance
-    def distance(self, city):
-        x_len = self.x - city.x
-        y_len = self.y - city.y
+    def distance(self, City):
+        x_len = self.x - City.x
+        y_len = self.y - City.y
         distance = math.sqrt((x_len ** 2) + (y_len ** 2))
         return distance
 
     # Used to represent the cities in a more formatted way
     def to_string(self):
-        return "city " + " x: " + str(self.x) + " y: " + str(self.y)
+        return "City " + " x: " + str(self.x) + " y: " + str(self.y)
 
     def __repr__(self):
         return self.to_string()
 
 
-''' current fitness
- After researching I found that there were already suitable fitness functions created 
- and it would be difficult and a waste of time to implement a completely 
- different one as a result I decided to use the one below from Eric Stoltz.
- Other examples have used it
-'''
+ # current fitness
+ # After researching I found that there were already suitable fitness functions created 
+ # and it would be difficult and a waste of time to implement a completely 
+ # different one as a result I decided to use the one below from Eric Stoltz.
+ # Other examples have used it
+
 
 # Use class for fitness function to define inverse of route
 # For the fitness function we are trying to minimize the route distance 
@@ -87,11 +86,11 @@ class FitnessFunc:
         # Look for another fitness function(reminder)
 
 
-''' Here is an alternative fitness function 
- this fitness function makes use of inverse total distance.
-However, I don't believe this method makes good use of the actual
-distance between the routes rather it uses a generic formula.
-'''
+# Here is an alternative fitness function 
+# this fitness function makes use of inverse total distance.
+# However, I don't believe this method makes good use of the actual
+# distance between the routes rather it uses a generic formula.
+
 
 # def total_fitness(total_d):
 #     if total_d!=0.0:
@@ -119,10 +118,10 @@ def initialize_pop(pop_size, c_list):
     return pop
 
 
-''' Had quite a bit of trouble understanding this part lucky by using 
-my previous knowledge of evolution I was able to understand. The idea of 
-tacking genes from both parents, I labelled them specifically in biological
-terms to help further my understanding'''
+# Had quite a bit of trouble understanding this part lucky by using 
+# my previous knowledge of evolution I was able to understand. The idea of 
+# tacking genes from both parents, I labelled them specifically in biological
+# terms to help further my understanding
 
 # Crossover of parents to produce a new generation
 def crossover_phase(parent_a, parent_b):
@@ -167,11 +166,11 @@ def mutation_phase(route1, mutate_rate):
     return route1
 
 
-''' Simple selection process rather then using dataframe
-less complex and achieves outcome however, it does not work as well
-and has limitations in that it doesn't get the best ranked routes.
+# Simple selection process rather then using dataframe
+# less complex and achieves outcome however, it does not work as well
+# and has limitations in that it doesn't get the best ranked routes.
 
-'''
+
 # def selection(rank, bestsize):
 #     sltResults = []
 #     result = []
@@ -184,12 +183,11 @@ and has limitations in that it doesn't get the best ranked routes.
 #     return sltResults
 
 
-'''
-Decided that this selection process was much better then one I previously 
-implemeneted it gets best routes via rank
 
-by 'Eric stolz'
-'''
+# Decided that this selection process was much better then one I previously 
+# implemeneted it gets best routes via rank
+# by 'Eric stolz'
+
 def selection(rank, bestsize):
     sltResults = []
     df = pd.DataFrame(np.array(rank), columns=["Index","Fitness"])
@@ -255,14 +253,14 @@ def mutatepop(pop, mutate_rate):
 
 
 
-''' Here we want to use all processes i.e functions to creation of next
-generation.
+# Here we want to use all processes i.e functions to creation of next generation.
 
-1. rank current routes
-2. select parents with selection phase
-3. create a mating pool
-4. create new generation
-5. apply mutations(swapping process) '''
+# 1. rank current routes
+# 2. select parents with selection phase
+# 3. create a mating pool
+# 4. create new generation
+# 5. apply mutations(swapping process) 
+
 def nextGeneration(currentGen, bestsize, mutate_rate):
     rank = rankRoutes(currentGen)
     sltResults = selection(rank, bestsize)
@@ -302,22 +300,17 @@ for i in range(0,10):
 
 
 # tested numeracy generation sizers and mutation rates
-initiateGA(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.01, generations=200)
+#initiateGA(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.01, generations=200)
 # initiateGA(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.05, generations=200)
 # initiateGA(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.05, generations=1000)
 
 
-''' 
-Conclusions 
 
-The higher the generation size the higher the time need to calculate
-distance and the higher the final distance is.
+# Conclusions 
 
-The mutation rate also affects the distance as the higher the mutation rate the greater
-the final distance is.
+# The higher the generation size the higher the time need to calculate distance and the higher the final distance is.
+# The mutation rate also affects the distance as the higher the mutation rate the greater the final distance is.
+# Using biological notation helps further understanding
 
-Using biological notation helps further understanding
+# credits to: 'Eric stolz' for helping break it down
 
-
-credits to: 'Eric stolz' for helping break it down
-'''
