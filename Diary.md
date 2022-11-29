@@ -35,12 +35,10 @@ This week I was slightly confused with the remaining part of the genetic algorit
 
 
 # Week 21-27
-This week I have worked towarsd getting a basic TSP genetic algorithm completed, this will further reinforce my knowledge and help me with the processes that take place in evolutionary algorithms. I feel ill with covid so for some days I was not able to complete worked as best as I feel I could but I am on track now.
+This week I have worked towarsd getting a basic TSP genetic algorithm completed, this will further reinforce my knowledge and help me with the processes that take place in evolutionary algorithms. I feel ill with covid so for some days I was not able to complete work as best as I feel I could but I am on track now. This week I have now uploaded the full TSP GA I have been working on with full comments. In the coming week I will include the visualisation for this however due to time constraints I will prorblem have to use a set of constant numbers.
 
 
-
-
-
+# Week 28-2
 
 
 
