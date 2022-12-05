@@ -39,7 +39,7 @@ This week I have worked towarsd getting a basic TSP genetic algorithm completed,
 
 
 # Week 28-2
-
+This week I worked on the visualisation for my project in pygame and worked more on the Gui in tkinter. I also worked on the report detailing my proof of concepts and going into more detail about the encoding of my project. The test case for the TSP GA was also uploaded.
 
 
 
