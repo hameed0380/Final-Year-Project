@@ -52,7 +52,7 @@ class City:
 
 
 # Use class for fitness function to define inverse of route
-# For the fitness function we are trying to minimize the route distance 
+# For the fitness function we are trying to minimize the route distance, so a larger fitness score is better 
 class FitnessFunc:
     def __init__(self, route):
         self.route = route
@@ -227,22 +227,24 @@ def matingPool(pop, sltResults):
         matingpool.append(pop[index])
     return matingpool
 
-
+# create offspring population
 def selectpop(matingpool, bestsize):
     offspring_1 = []
     length = len(matingpool) - bestsize
     pool = random.sample(matingpool, len(matingpool))
 
+    # Use bestsize i.e. elitism to retain best routes from population
     for i in range(0,bestsize):
         offspring_1.append(matingpool[i])
     
+    # Use selesction function to fill the rest of the next generation
     for i in range(0, length):
         child = crossover_phase(pool[i], pool[len(matingpool)-i-1])
         offspring_1.append(child)
     return offspring_1
 
 
-
+# extend mutation function to run through the new population
 def mutatepop(pop, mutate_rate):
     mutatedPop = []
     
@@ -279,17 +281,36 @@ def initiateGA(pop, popSize, bestsize, mutate_rate, generations):
     current.append((1 / rankRoutes(pop1)[0][1]))
 
     # Introduces other generation
+    # loop over generations to see how distance improved over time from each generation
     for i in range(0, generations):
         pop1 = nextGeneration(pop1, bestsize, mutate_rate)
         # Displays the current distance helps to show the process
         current.append((1 / rankRoutes(pop1)[0][1]))
         print("Gen =", i, " curr distance =", current[i])
 
-    
+    # final distance calculated
     print("Final distance: " + str(1 / rankRoutes(pop1)[0][1]))
     elite_routeInd = rankRoutes(pop1)[0][0]
     elite_route = pop1[elite_routeInd]
     return elite_route
+
+# Plot to see how the distance improved over time 
+def geneticAlgorithmPlot(pop, popSize, bestsize, mutate_rate, generations):
+    pop1 = initialize_pop(popSize, pop)
+    current = []
+    current.append((1 / rankRoutes(pop1)[0][1]))
+
+    # loop over generations to see how distance improved over time from each generation
+    for i in range(0, generations):
+        pop1 = nextGeneration(pop1, bestsize, mutate_rate)
+        current.append((1 / rankRoutes(pop1)[0][1]))
+
+    # plot and labels
+    plt.plot(current)
+    plt.ylabel('Distance')
+    plt.xlabel('Generation')
+    plt.show()
+
 
 
 # Running GA
@@ -299,8 +320,11 @@ for i in range(0,10):
     c_list.append(City(x=int(random.random() * 100), y=int(random.random() * 100)))
 
 
+
+geneticAlgorithmPlot(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.01, generations=500)
+
 # tested numeracy generation sizers and mutation rates
-#initiateGA(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.01, generations=200)
+initiateGA(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.01, generations=500)
 # initiateGA(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.05, generations=200)
 # initiateGA(pop=c_list, popSize=100, bestsize=20, mutate_rate=0.05, generations=1000)
 
