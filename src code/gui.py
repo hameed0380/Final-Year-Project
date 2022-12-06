@@ -24,13 +24,15 @@ class Window(Frame):
     #Creation of init_window
     def init_window(self):
 
-        #changing the title of the master widget to Survival Rate Application     
+        #changing the title of the master widget to TSP Genetic Algorithm
         self.master.title("TSP Genetic Algorithm")
 
         '''allowing the widget to take the full space of the root window
         so widgit is continuously shown even when root window has been changed
         in size'''
         self.pack(fill=BOTH, expand=1)
+
+
 
         #creating a menu instance
         menu = Menu(self.master, tearoff=False)
@@ -45,25 +47,24 @@ class Window(Frame):
         #create the help_centre object
         help_centre = Menu(menu)
         #added "Help Centre" to the menu that has been created
-        menu.add_cascade(label="Help Centre", menu=help_centre)
-        '''When the help centre button is clicked the Help object should be
-        shown, carry out its command in the function Help'''
-        help_centre.add_command(label="Help", command=self.Help)
+        menu.add_command(label="Info", command=self.Help)
+        
+        
+        #This button can close the window
+        button_1 = Button(root, text =" Force Quit", command = root.destroy)
+        button_1.pack(pady = 50)
+
 
     def Help(self): 
         root = tkinter.Tk()
-        T = tkinter.Text(root, height=2, width=30)
+        T = tkinter.Text(root, height=10, width=40)
         T.pack()
-        T.insert(tkinter.END, "Just a text Widget\nin two lines\n")
+        T.insert(tkinter.END, "Genetic Algorithm TSP\n\nThis is an application demonstrating\nhow the travelling salesman problem\nworks to run it select the run button\nin the menu.")
         tkinter.mainloop() 
 
 
-    def info():
-        tkinter.messagebox.showinfo('About', 'SAP is an application dedicated to finding \nthe survival rate of organisms and storing \nthem in a database')
-        # Create the title about for the messagebox
-
-
 		#window.mainloop()
+
 
     def Run(self):
     	main()
@@ -75,8 +76,8 @@ class Window(Frame):
  you can later have windows within windows.'''
 
 root = Tk()# Creating the window
-root.geometry("400x300")# Defining and setting the dimesions of the window/client
-
+root.geometry("400x250")# Defining and setting the dimesions of the window/client
+#root['background']='#856ff8'
 #creation of an instance
 app = Window(root)
 
