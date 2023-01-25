@@ -1,5 +1,7 @@
 This is the first test of my diary. ~02/10/2022
 
+Term 1
+
 # Week 26-2 Oct
 This week I reviewed ideas for my project plan and added a section on risks and mitigations. I realised that creating proof of concepts and simple programs can help identify other risks and mitigations. 
 
@@ -41,6 +43,10 @@ This week I have worked towarsd getting a basic TSP genetic algorithm completed,
 # Week 28-2
 This week I worked on the visualisation for my project in pygame and worked more on the Gui in tkinter. I also worked on the report detailing my proof of concepts and going into more detail about the encoding of my project. The test case for the TSP GA was also uploaded.
 
+Term 2
+
+# Week 23-29
+Have a meeting with supervisor to discuss the project. Do research on constraint optimisation in a broad sense and how it can be further extended in the project. Research potential method for this.
 
 
 
