@@ -10,6 +10,5 @@ This is the repository for my final year project to access the code visit src co
 
 To run the program open and run TSPGA_application, this contains the GUI and the visualisation for the TSP problem.
 
-The test_TSPGA program contains test cases for the TSPGA program. The TSPGA program is the first TSP program I worked on with an implementation of a genetic algorithm. 
-
-The simplega is the first genetic algorithm I worked on, a simple genetic algorithm to satisfy the expression below in th function foo. Whilst gui shows the an implementation of the GUI.
+The TSPGA part of the project consists of four main files: TSPGA_application, test_TSPGA, TSPGA, and simplega. 
+TSPGA_application is the main program that contains both the GUI and the visual representation of the TSP problem. test_TSPGA is a program that holds the test cases for TSPGA. TSPGA is the first TSP program developed with a genetic algorithm implementation. Finally, simplega is a simple genetic algorithm that aims to satisfy the expression in the foo function.
