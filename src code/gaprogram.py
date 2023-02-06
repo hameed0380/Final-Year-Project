@@ -18,7 +18,7 @@ class Window(Frame):
     def init_window(self):
         self.master.title("TSP Genetic Algorithm")
 
-                '''allowing the widget to take the full space of the root window
+        '''allowing the widget to take the full space of the root window
         so widgit is continuously shown even when root window has been changed
         in size'''
 
