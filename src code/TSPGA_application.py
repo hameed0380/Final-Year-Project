@@ -16,11 +16,11 @@ red = (255, 0, 0) # colour used
 (width, height) = (500, 500) # window created with set width and height
 
 
-screen = pygame.display.set_mode((width, height)) # set screen size
+screen = pygame.display.set_mode((width, height)) # Set the size of the screen
 pygame.display.set_caption('TSP Genetic Algorithm') # Sets title of screen
 #screen.fill(bg_colour)
 
-# set values
+# Set values for number of cities, population size, next generation, and font
 totalCities = 15
 pop_size = 5000
 nxt_gen = 0.5
