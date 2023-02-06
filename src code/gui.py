@@ -1,86 +1,68 @@
-#To import everything from tkinter
+# Import everything from tkinter and the font module
 from tkinter import *
-from tkinter import font
 import tkinter.messagebox
+import pygame
 
+
+# Import the TSPGA_application module
 from TSPGA_application import *
 
-#Creating the class, Window, and inheriting from the Frame which is a class from tkinter
-#class. Frame is a class from the tkinter module 
 class Window(Frame):
 
-    # Define settings upon initialization. At this point you can specify
     def __init__(self, master=None):
-        
-        # parameters that you want to send through the Frame class 
-        Frame.__init__(self, master)   
-
-        #reference to the master widget created, which is the tk window                 
+        Frame.__init__(self, master)
         self.master = master
-
-        #To run init_window, which does not exist yet
         self.init_window()
 
-    #Creation of init_window
+    # Initialize the window with widgets
     def init_window(self):
-
-        #changing the title of the master widget to TSP Genetic Algorithm
         self.master.title("TSP Genetic Algorithm")
 
-        '''allowing the widget to take the full space of the root window
+                '''allowing the widget to take the full space of the root window
         so widgit is continuously shown even when root window has been changed
         in size'''
+
         self.pack(fill=BOTH, expand=1)
 
+        title_label = Label(self, text="Travelling Salesman Problem", font=("Helvetica", 16))
+        title_label.pack(pady=20)
 
-
-        #creating a menu instance
+        # Creating a menu instance
         menu = Menu(self.master, tearoff=False)
         self.master.config(menu=menu)
 
-
-        #create the Simulator object
+        # Create the Simulator object
         Simulator = Menu(menu)
-        #added "Simulator" to the menu created
-        menu.add_command(label="Run", command=self.Run)
+        menu.add_command(label="Simulator", command=self.Run)
 
-        #create the help_centre object
+        # Create the help_centre object
         help_centre = Menu(menu)
-        #added "Help Centre" to the menu that has been created
         menu.add_command(label="Info", command=self.Help)
-        
-        
-        #This button can close the window
-        button_1 = Button(root, text =" Force Quit", command = root.destroy)
-        button_1.pack(pady = 50)
 
+        # Button to close the window
+        button_1 = Button(root, text="Force Quit", command=root.destroy)
+        button_1.pack(pady=50)
 
+    # Show information about the TSP Genetic Algorithm
     def Help(self): 
         root = tkinter.Tk()
-        T = tkinter.Text(root, height=10, width=40)
+        root.geometry("400x250")
+        root.config(bg="#856ff8")
+        T = tkinter.Text(root, height=10, width=40, font=("Helvetica", 12), bg="#856ff8", fg="white")
         T.pack()
-        T.insert(tkinter.END, "Genetic Algorithm TSP\n\nThis is an application demonstrating\nhow the travelling salesman problem\nworks to run it select the run button\nin the menu.")
-        tkinter.mainloop() 
+        T.insert(tkinter.END, "Genetic Algorithm TSP\n\nThis is an application demonstrating\nhow the travelling salesman problem\nworks. To run it, select the Simulator\noption in the menu.")
+        tkinter.mainloop()
 
 
-		#window.mainloop()
-
-
+    # Run the main function from the TSPGA_application module
     def Run(self):
-    	main()
-
-
-
+        main()
 
 ''' root window created. Here, that would be the only window, but
  you can later have windows within windows.'''
 
-root = Tk()# Creating the window
-root.geometry("400x250")# Defining and setting the dimesions of the window/client
-#root['background']='#856ff8'
-#creation of an instance
+# Create the root GUI window
+root = Tk()
+root.geometry("400x250")
 app = Window(root)
-
-
-#mainloop 
-root.mainloop()  
+root.mainloop()
