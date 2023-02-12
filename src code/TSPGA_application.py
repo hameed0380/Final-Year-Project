@@ -1,50 +1,37 @@
+# Imports
 import pygame
 import random
 import math
 import sys
 import time
 
-#  initiate
-pygame.init()
 
-# Colour presets
-bg_colour = (51, 51, 51)  # set bg colour (grey)
-white = (240, 240, 240) # colour used
-red = (255, 0, 0) # colour used
-
-# Used in the actual calculation and is a determinant factor
-(width, height) = (500, 500) # window created with set width and height
-
-
-screen = pygame.display.set_mode((width, height)) # Set the size of the screen
-pygame.display.set_caption('TSP Genetic Algorithm') # Sets title of screen
-#screen.fill(bg_colour)
-
-# Set values for number of cities, population size, next generation, and font
-totalCities = 15
-pop_size = 5000
-nxt_gen = 0.5
-font = pygame.font.SysFont('Calibri', 15, True, False) # Font used to draw text on the screen (size 15)
-
+# Model ---------
 
 # For the TSP a gene in this case would be a city with its coordinates(x, y).
 # The x and y represent the coordinates for the city.
 # n is a label that represents each city
 class City:
    def __init__(self, x, y, n):
-        self.x = x
-        self.y = y
-        self.node = n
-        self.text = font.render("City: " + str(self.node), False, red)
+      """
+      Initialize the City class with x and y as the coordinates of the city and n as a label that represents the city.
+      """   
+      self.x = x
+      self.y = y
+      self.node = n
+      self.text = font.render("City: " + str(self.node), False, red)
 
-   # Drawing each point onto the screen
+   # Method display is used to draw each city onto the screen
    def display(self):
-         pygame.draw.circle(screen, (red), (self.x, self.y), 5)
+      pygame.draw.circle(screen, (red), (self.x, self.y), 5)
 
 
 # Fitness class to find the routes
 # The distance of the route
 class FitnessFunc:
+   """
+   Initialize the FitnessFunc class with a random route and a distance of 0.
+   """
    def __init__(self):
       # generate path for each city
       self.route = random.sample(list(range(totalCities)), totalCities)
@@ -68,6 +55,27 @@ class FitnessFunc:
       return distance
 
 
+# View ---------
+
+pygame.init() # initiate
+pygame.font.init()
+bg_colour = (51, 51, 51)  # set bg colour (grey)
+white = (240, 240, 240) # colour used
+red = (255, 0, 0) # colour used
+(width, height) = (500, 500) # window created with set width and height
+
+screen = pygame.display.set_mode((width, height)) # Set the size of the screen
+pygame.display.set_caption('TSP Genetic Algorithm') # Sets title of screen
+
+# Set values for number of cities, population size, next generation, and font
+totalCities = 15
+pop_size = 5000
+nxt_gen = 0.5
+font = pygame.font.SysFont('Calibri', 15, True, False) # Font used to draw text on the screen (size 15)
+
+
+
+# Controller ---------
 
 # Carries out ranking -> looking at best(elitism) 
 # Sorts the population according to the fitness function, which is the route's distance
@@ -76,7 +84,6 @@ def rank():
    # will sort the nested list based on the result of the lambda function
    population.sort(key = lambda x : x.distance, reverse = False)
    return
-
 
 # selects best percentage of population and produce new generation
 # Uses similar principle of crossover in TSPGA 
@@ -92,7 +99,7 @@ def crossover():
      while index1 == index2:
          index2 = random.randint(0, len(updatedPop) - 1)
 
-     # gene from parents set to random index used from above i.e use of random lib    
+     # gene from parents set to random index used from above i.e use of random lib
      parent_a = updatedPop[index1]
      parent_b = updatedPop[index2]
      p = random.randint(0, totalCities - 1)
