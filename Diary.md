@@ -48,7 +48,13 @@ Term 2
 # Week 23-29
 Have a meeting with supervisor to discuss the project. Do research on constraint optimisation in a broad sense and how it can be further extended in the project. Research potential method for this.
 
+# Week 30-5/ 6-12
+Have been working on fixing the issues brought up such as adding documentation refactorising code and making it more understandable.Have also added a video on how to run the code and what it should display. Have been working on report so added a section on TSP but have not committed this yet as it is quite rough. My main focus is trying to exapnd on my project to make it better.
 
+# Week 13-19
+1. Create a survey and distribute it.
+2. Keeping working to try to expand the project I am between the idea of incorporating other CSP or solving Constraint optimisation itself.
+3. Add more sections to the report.
 
 
 
