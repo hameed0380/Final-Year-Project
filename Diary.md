@@ -52,7 +52,7 @@ Have a meeting with supervisor to discuss the project. Do research on constraint
 Have been working on fixing the issues brought up such as adding documentation refactorising code and making it more understandable.Have also added a video on how to run the code and what it should display. Have been working on report so added a section on TSP but have not committed this yet as it is quite rough. My main focus is trying to exapnd on my project to make it better.
 
 # Week 13-19
-Created a survey of optimisation methods and compared them as well as examining their strentghs and weaknesses.
+Created a survey of optimisation methods and compared them as well as examining their strentghs and weaknesses. Improved different aspects of the report such as the introduction and the abstract.
 
 1. Create a survey and distribute it.
 2. Keeping working to try to expand the project I am between the idea of incorporating other CSP or solving Constraint optimisation itself.
