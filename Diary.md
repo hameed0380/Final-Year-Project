@@ -54,9 +54,13 @@ Have been working on fixing the issues brought up such as adding documentation r
 # Week 13-19
 Created a survey of optimisation methods and compared them as well as examining their strentghs and weaknesses. Improved different aspects of the report such as the introduction and the abstract.
 
-1. Create a survey and distribute it.
+1. Create a survey
 2. Keeping working to try to expand the project I am between the idea of incorporating other CSP or solving Constraint optimisation itself.
 3. Add more sections to the report.
+
+# Week 20-26
+Added a bit more to my reports and improved them a bit. Also working on different CSP problems and aim to upload them some time next week. This will help futher my understand and build my knowledge.
+
 
 
 
