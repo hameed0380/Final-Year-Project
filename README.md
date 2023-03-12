@@ -1,6 +1,7 @@
 # Final Year Project
 
 Genetic Algorithm Project
+CS4822 - Real-World Problem-Solving with Genetic Algorithms: A Practical Exploration of Metaheuristic Optimisation
 
 Implement a GA and apply it to various optimisation problems such as constraint satisfaction.
 This is the repository for my final year project to access the code visit src code. Here you can run the visualisation and the genetic algorithm.
