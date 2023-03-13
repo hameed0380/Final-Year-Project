@@ -61,11 +61,11 @@ Created a survey of optimisation methods and compared them as well as examining 
 # Week 20-26
 Added a bit more to my reports and improved them a bit. Also working on different CSP problems and aim to upload them some time next week. This will help futher my understand and build my knowledge.
 
+# Week 28-11
+So far I have worked towards creating a visual for solving the knapsack problem using pygame and working on the n-queens problem with pygame. I have also been researching optimisatin test functions amoung other things. Furthermore, I realised that the visualisation needed to be somewhat interactive and actually affect the ga so I am working on a way to implement this possibly with tkinter as it is may be a better option then doing so in pygame. Overall this has been a large 2 weeks for me I want the project to be good and thus spent hours on research alone trying to figure out the best way to approach this and feel this will benefit me in the long run. Although I must confess I did understimated the amount of coding and learning required to complete this project though I feel this was a great opportunity to learn about this topic more in depth. In the following week I should be able to produce some of the code and updated parts of the project. Generally I have not liked uploading things as I am constantly testing things that could suit this project and uploading and then deleting things would not be a good use of my time but I do assure you I have been working hard to get this done well.
 
-
-
-
-
+# Week 13
+This week will be trying to finish genetic algorithm visualisations (pretty much done but need to work on a few things) this includes knapsack, TSP and n-queens, and the interactive one in tkinter. I have opted to try to do a visualisation in the interactive one with moving points on a 3d plot.
 
 
 

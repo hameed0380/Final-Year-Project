@@ -1,9 +1,9 @@
 # Final Year Project
 
-This repository has been created to store your final year project.
+Genetic Algorithm Project
+CS4822 - Real-World Problem-Solving with Genetic Algorithms: A Practical Exploration of Metaheuristic Optimisation
 
-You may edit it as you like, but please do not remove the default topics or the project members list. These need to stay as currently defined in order for your supervisor to be able to find your project.
-
+Implement a GA and apply it to various optimisation problems such as constraint satisfaction.
 This is the repository for my final year project to access the code visit src code. Here you can run the visualisation and the genetic algorithm.
 
 # Explanation of the programs:
