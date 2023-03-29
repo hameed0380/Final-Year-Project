@@ -1,6 +1,6 @@
 # genetic algorithm to solve the 0-1 knapsack problem
 import random
-
+import matplotlib.pyplot as plt
 
 # generate a random population based on population size (genes denoted with simple binary)
 def gen_pop(size):
@@ -100,22 +100,36 @@ print("Performing genetic evolution:")
 # generate a random population
 population = gen_pop(population_size)
 
+# keep track of best fitness value over time
+best_fitness_over_time = []
+
 # evolve the population for specified number of generations
 for i in range(generations):
-	# select two chromosomes for crossover
-	parent1, parent2 = selection(population)
+    # select two chromosomes for crossover
+    parent1, parent2 = selection(population)
 
-	# perform crossover to generate two new chromosomes
-	child1, child2 = crossover(parent1, parent2)
+    # perform crossover to generate two new chromosomes
+    child1, child2 = crossover(parent1, parent2)
 
-	# perform mutation on the two new chromosomes
-	if random.uniform(0, 1) < mutation_probability:
-		child1 = mutate(child1)
-	if random.uniform(0, 1) < mutation_probability:
-		child2 = mutate(child2)
+    # perform mutation on the two new chromosomes
+    if random.uniform(0, 1) < mutation_probability:
+        child1 = mutate(child1)
+    if random.uniform(0, 1) < mutation_probability:
+        child2 = mutate(child2)
 
-	# replace the old population with the new population
-	population = [child1, child2] + population[2:]
+    # replace the old population with the new population
+    population = [child1, child2] + population[2:]
+
+    # get the best fitness value from the population
+    best_fitness = fitness_func(best_gen(population))
+    best_fitness_over_time.append(best_fitness)
+
+# plot the best fitness value over time
+plt.plot(best_fitness_over_time)
+plt.xlabel('Generation')
+plt.ylabel('Best fitness value')
+plt.title('Genetic algorithm performance')
+plt.show()
 
 # get the best chromosome from the population
 best = best_gen(population)
@@ -125,9 +139,9 @@ total_weight = 0
 total_value = 0
 
 for i in range(len(best)):
-	if best[i] == 1:
-		total_weight += items[i][0]
-		total_value += items[i][1]
+    if best[i] == 1:
+        total_weight += items[i][0]
+        total_value += items[i][1]
 
 # print the best solution
 print("\nThe best solution:")
