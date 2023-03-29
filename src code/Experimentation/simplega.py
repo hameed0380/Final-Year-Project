@@ -2,6 +2,7 @@
 # ref https://www.youtube.com/watch?v=4XZoVQOt-0I
 
 import random
+import matplotlib.pyplot as plt
 
 # The function to be optimized
 def foo(x,y,z):
@@ -24,6 +25,10 @@ solutions = []
 for s in range(1000):
     solutions.append( (random.uniform(0,10000), random.uniform(0,10000), random.uniform(0,1000)))
 
+# Initialize variables for the plot
+best_solutions = []
+generation_nums = []
+
 # Run the genetic algorithm for 10000 generations
 for i in range(10000):
 
@@ -39,6 +44,10 @@ for i in range(10000):
     # Print the best solution of the current generation
     print(f"=== Gen {i} best solutions === ")
     print(rankedsolutions[0])
+
+    # Add the best solution of the current generation to the plot variables
+    best_solutions.append(rankedsolutions[0][0])
+    generation_nums.append(i)
 
     # Exit the loop if the best solution satisfies the target value
     if rankedsolutions[0][0] > 999:
@@ -66,3 +75,10 @@ for i in range(10000):
 
     # Set the current population to the new generation
     solutions = newGen
+
+# Plot the fitness of the best solution over time
+plt.plot(generation_nums, best_solutions)
+plt.xlabel('Generation')
+plt.ylabel('Fitness of Best Solution')
+plt.title('Genetic Algorithm Performance')
+plt.show()
