@@ -14,10 +14,12 @@ Finally, a folder Experimentation has all the GA's coded for practice and unders
 
 # Running The Project
 To install the dependencies from this file, you can use the following command in your terminal or command prompt:
+
     pip install -r requirements.txt
 This will install the packages listed in the requirements.txt file with their specified versions.
 
 Then navigate to the directory containing the GenAlgoLab.py file, you can now run the project using the following command:
+
     python GenAlgoLab.py
 
 
