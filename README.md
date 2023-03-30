@@ -12,6 +12,14 @@ test_TSPGA is a program that holds the test cases for TSPGA.
 TSPGA is the first TSP program developed with a genetic algorithm implementation. 
 Finally, a folder Experimentation has all the GA's coded for practice and understanding an example is simplega is a simple genetic algorithm that aims to satisfy the expression in the foo function.
 
+# Running The Project
+To install the dependencies from this file, you can use the following command in your terminal or command prompt:
+    pip install -r requirements.txt
+This will install the packages listed in the requirements.txt file with their specified versions.
+
+Then navigate to the directory containing the GenAlgoLab.py file, you can now run the project using the following command:
+    python GenAlgoLab.py
+
 
 # GenAlgoLab Instruction Manual
 
@@ -42,3 +50,9 @@ Using the Program
 6. To close the main window and all open application windows, click on the "Force Quit" button in the main window.
 
 --video demonstration soon
+
+
+
+
+
+
