@@ -7,7 +7,7 @@ from tkinter import ttk, PhotoImage
 import subprocess
 
 
-class TSPGAGUI(tkinter.Frame):
+class GAGUI(tkinter.Frame):
     """Class representing the GUI for the TSPGA simulation"""
 
     def __init__(self, master=None):
@@ -21,6 +21,7 @@ class TSPGAGUI(tkinter.Frame):
         self.master.title("Genetic Algorithm")
         self.pack(fill=tkinter.BOTH, expand=1)
 
+        # Add big bold label
         title_label = ttk.Label(
             self, text="GenAlgoLab", font=("Helvetica", 16)
         )
@@ -30,11 +31,11 @@ class TSPGAGUI(tkinter.Frame):
         image_label = ttk.Label(self, image=self.image)
         image_label.pack(pady=10)
 
-        # Add a menu bar
+        # menu bar for naviagation
         menu = tkinter.Menu(self.master, tearoff=False)
         self.master.config(menu=menu)
 
-        # Create the CSP dropdown menu
+        # CSP dropdown menu
         csp_menu = tkinter.Menu(menu, tearoff=False)
         menu.add_cascade(label="CSP", menu=csp_menu)
 
@@ -109,7 +110,7 @@ def run_gui():
     # Create the root GUI window
     root = ThemedTk(theme="arc")
     root.geometry("600x400")
-    app = TSPGAGUI(root)
+    app = GAGUI(root)
     root.mainloop()
 
 
