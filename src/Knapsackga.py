@@ -1,231 +1,147 @@
-import random
 import pygame
-import time
+import random
 import sys
+import numpy as np
 
 # Constants
-ITEMS = [] # List to store the items
-CAPACITY = 0  # Stores maximum capacity of the knapsack
-POPULATION_SIZE = 50 # num of solutions in the population
-NUM_GENERATIONS = 100 # num of generations for the genetic algorithm
-MUTATION_PROBABILITY = 0.1 # Probability of mutation
+board = 8
+population_size = 100
+mutation_rate = 0.1
+size_window = (480, 480)
+red = (255, 0, 0)
+white = (255, 255, 255)
+black = (0, 0, 0)
+brown = (139, 69, 19)
+elitism_cnt = 2 # Elitism -> per
+max_iterations = 1000
+k = 2 # tournament size
 
-# Colors
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
+# Load the queen image adn scale to tile
+queen_image = pygame.image.load('queen1.png')
+queen_image = pygame.transform.scale(queen_image, (size_window[0] // board, size_window[1] // board))
 
-# Pygame initialization
+# Initialize Pygame
 pygame.init()
-SCREEN = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Knapsack Problem")
+screen = pygame.display.set_mode(size_window)
+pygame.display.set_caption("N-Queens Problem with Genetic Algorithm")
 
-class Item:
-    """ Item class represents an item with a name, value, and weight. """
-    def __init__(self, name, value, weight):
-        self.name = name
-        self.value = value
-        self.weight = weight
-
-
-class Population:
-    """ Population class represents a population of solutions """
-    def __init__(self, size):
-        self.solutions = [generate_solution() for x in range(size)]
-
-# Fitness function calculates the total value of a solution considering the maximum capacity
-def fitness(solution):
-    total_value = 0
-    total_weight = 0
-    for i in range(len(solution)):
-        if solution[i] == 1:
-            total_value += ITEMS[i].value
-            total_weight += ITEMS[i].weight
-    if total_weight > CAPACITY:
-        return 0
-    return total_value
-
-# Selection function selects solutions based on their fitness (using roulette wheel selection) --> discussed in project
-def selection(population):
-    fitnesses = [fitness(solution) for solution in population.solutions]
-    total_fitness = sum(fitnesses)
-    probabilities = [fitness/total_fitness for fitness in fitnesses]
-    selected = []
-    for i in range(len(population.solutions)):
-        selected.append(random.choices(population.solutions, probabilities)[0])
-    return selected
-
-# Crossover function combines two parent solutions to create two offspring solutions
-def crossover(parent1, parent2):
-    point = random.randint(1, len(parent1)-1)
-    child1 = parent1[:point] + parent2[point:]
-    child2 = parent2[:point] + parent1[point:]
-    return child1, child2
-
-# Mutation function modifies a solution with given probability
-def mutation(solution):
-    mutated_solution = solution[:]
-    for i in range(len(mutated_solution)):
-        if random.random() < MUTATION_PROBABILITY:
-            mutated_solution[i] = 1 - mutated_solution[i]
-    return mutated_solution
-
-# Generate initial solution (creates a random solution)
-def generate_solution():
-    solution = []
-    for i in range(len(ITEMS)):
-        solution.append(random.randint(0, 1))
-    return solution
-
-# Draw knapsack function
-def draw_knapsack(solution):
-    SCREEN.fill((40, 40, 40))
-
-    # Get the list of selected items from the solution
-    selected_items = [ITEMS[i] for i in range(len(solution)) if solution[i] == 1]
-    # If no items are selected, display the message and return
-    if not selected_items:
-        font = pygame.font.SysFont("arial", 20)
-        text = font.render("No items selected", True, (255, 255, 255))
-        SCREEN.blit(text, (20, 20))
-        return
-
-    total_weight = sum(item.weight for item in selected_items) # Calculate total weight of the selected items
-    total_value = sum(item.value for item in selected_items) # Calculate total value of the selected items
-
-    # Displays total value and total weight on the screen
-    font = pygame.font.SysFont("arial", 20)
-    text = font.render("Total value: {}".format(total_value), True, (255, 255, 255))
-    SCREEN.blit(text, (20, 20))
-    text = font.render("Total weight: {}".format(total_weight), True, (255, 255, 255))
-    SCREEN.blit(text, (20, 50))
-
-    # for drawing the items
-    x = 50 # Initialize the x coordinate 
-    y = 600 // 2 # Initialize the y coordinate 
-
-    # Sets the maximum height, width, and color of the item bars
-    max_height = 600 // 2 - 100
-    bar_width = 800 - 100
-    bar_height = max_height - len(selected_items) * 10
-    bar_color = (70, 70, 70)
-
-    pygame.draw.rect(SCREEN, bar_color, (x, y, bar_width, bar_height))  # Draw the background bar
-
-     # Calculate the height, color, and spacing for each item
-    item_heights = [int(item.weight / total_weight * max_height) for item in selected_items]
-    item_colors = [(0, 100, 200), (200, 100, 0), (0, 200, 100), (200, 0, 100), (100, 0, 200)]
-    item_spacings = [10] * len(selected_items)
-
-    # To adjust the item heights and spacings to fit within the bar height
-    while sum(item_heights) > bar_height:
-        for i in range(len(item_heights)):
-            if item_heights[i] > 10:
-                item_heights[i] -= 10
-                break
-            elif item_spacings[i] > 1:
-                item_spacings[i] -= 1
-                break
-            elif i == len(item_heights) - 1:
-                item_heights[-1] -= 1
-
-    # Draw the items as colored bars with labels attached
-    for i, item in enumerate(selected_items):
-        item_width = int(item.value / total_value * (bar_width - sum(item_spacings)))
-        item_color = item_colors[i % len(item_colors)]
-        item_rect = (x, y - item_heights[i], item_width, item_heights[i])
-        pygame.draw.rect(SCREEN, item_color, item_rect)
-
-        # Display the item's value as a label above the bar
-        item_label = font.render(str(item.value), True, (255, 255, 255))
-        SCREEN.blit(item_label, (item_rect[0] + item_rect[2] // 2 - item_label.get_width() // 2, item_rect[1] - 20))
-
-        x += item_width + item_spacings[i]
+# computes score for each chromosome(solution) in the population
+def fitness(solutions):
+    threat = 0 # threat counter
+    # Count for when pieces threaten each other
+    for i in range(board):
+        for j in range(i + 1, board):
+            if solutions[i] == solutions[j]:
+                threat += 1
+            elif abs(solutions[i] - solutions[j]) == j - i:
+                threat += 1
+    return 1 / (threat + 1)
 
 
-# Main function
+def selection(population, k):
+    # k individuals from population selected and perform a tournament amongst them
+    tournament = random.sample(population, k)
+    parent_a = max(tournament, key=lambda solutions: fitness(solutions))
+    tournament = random.sample(population, k)
+    parent_b = max(tournament, key=lambda solutions: fitness(solutions))
+    return parent_a, parent_b
+
+# Single point crossover function combines two parent to create two offspring solutions (recycled)
+# crossover point randomly generated which determines the point for exchange of information between parents to form offspring
+def crossover(parent_a, parent_b):
+    x = random.randint(1, len(parent_a)-1)
+    Offspring1 = np.append(parent_a[:x] , parent_b[x:])
+    Offspring2 = np.append(parent_b[:x] , parent_a[x:])
+    return Offspring1, Offspring2
+
+# Define the mutation function
+def mutation(solutions):
+    # Convert the solutions tuple to a list
+    solutions = list(solutions)
+    
+    # Swap two random positions in the solutions
+    i = random.randint(0, board - 1)
+    j = random.randint(0, board - 1)
+    solutions[i], solutions[j] = solutions[j], solutions[i]
+    
+    # Convert the solutions list back to a tuple and return it
+    return tuple(solutions)
+
+
+# Generate the initial population
+population = [tuple(random.randint(0, board - 1) for i in range(board)) for j in range(population_size)]
+
+
+# Initialize font system
+pygame.font.init()
+font = pygame.font.Font(None, 36)  # Choose the font and size
+
+# Main loop to run ga
 def main():
-    global ITEMS, CAPACITY, POPULATION_SIZE, NUM_GENERATIONS, MUTATION_PROBABILITY
-    # Items and their properties (name, value, weight)
-    ITEMS = [
-        Item("Item 1", 10, 5),
-        Item("Item 2", 4, 4),
-        Item("Item 3", 8, 3),
-        Item("Item 4", 6, 6),
-        Item("Item 5", 2, 1),
-        Item("Item 6", 5, 2),
-        Item("Item 7", 7, 4),
-        Item("Item 8", 1, 1),
-        Item("Item 9", 3, 3),
-        Item("Item 10", 6, 5),
-        Item("Item 11", 9, 7),
-        Item("Item 12", 8, 4),
-        Item("Item 13", 5, 2),
-        Item("Item 14", 3, 1),
-        Item("Item 15", 2, 1)
-    ]
+    iteration_counter = 0
+    global population
 
-    # Problem parameters
-    CAPACITY = 20
-    POPULATION_SIZE = 50
-    NUM_GENERATIONS = 1000
-    MUTATION_PROBABILITY = 0.1
-
-    # Evolve the population through generations
-    population = Population(POPULATION_SIZE)
-    for generation in range(NUM_GENERATIONS):
-        # selects parents from the population based on fitness
-        parents = selection(population)
-        offspring = []
-
-        # Perform crossover and mutation to generate offspring
-        for i in range(0, len(parents), 2):
-            parent1 = parents[i]
-            parent2 = parents[i+1]
-            child1, child2 = crossover(parent1, parent2)
-            child1 = mutation(child1)
-            child2 = mutation(child2)
-            offspring.append(child1)
-            offspring.append(child2)
-
-        # Replace the old population with the offspring
-        population.solutions = offspring
-
-        # Find the best solution within the current population
-        best_solution = max(population.solutions, key=fitness)
-
-        # Calculates the total value and weight of the best solution
-        total_value = 0
-        total_weight = 0
-        for i in range(len(best_solution)):
-            if best_solution[i] == 1:
-                total_value += ITEMS[i].value
-                total_weight += ITEMS[i].weight
-
-        # Print the best solution with value and weight        
-        print("Best solution found: ", best_solution)
-        print("Total value: ", total_value)
-        print("Total weight: ", total_weight)
-        draw_knapsack(best_solution)
-        pygame.display.update()
-
-        # Handle events
+    while iteration_counter < max_iterations:
+        # Check if the user wants to quit
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
 
-                
+        iteration_counter += 1
+        # Run one iteration of the genetic algorithm
+        # Select two parents
+        parent_a, parent_b = selection(population, k)
 
-    pygame.display.update()
-    time.sleep(30)
+        # Create two children through crossover
+        Offspring1, Offspring2 = crossover(parent_a, parent_b)
+
+        # Mutate the children
+        Offspring1 = mutation(Offspring1)
+        Offspring2 = mutation(Offspring2)
+
+        # Replace two least fit solutionss with the children
+        population = sorted(population, key=lambda solutions: fitness(solutions))
+        population = population[:elitism_cnt] + population[elitism_cnt + 2:] # preserving the best solutionss (elitism)
+        population.append(Offspring1)
+        population.append(Offspring2)
+
+        # Draw the chessboard and the best candidate
+        square_size = size_window[0] // board
+        screen.fill(white)
+
+        # Draw the chessboard
+        for i in range(board):
+            for j in range(board):
+                if (i + j) % 2 == 0:
+                    color = brown
+                else:
+                    color = white
+                pygame.draw.rect(screen, color, (i * square_size, j * square_size, square_size, square_size))
+
+        # Draw the queens for the best candidate
+        best_solutions = max(population, key=lambda c: fitness(c))
+        for i in range(board):
+            screen.blit(queen_image, (i * square_size, best_solutions[i] * square_size))
+        
+        iteration_counter += 1
+        iteration_text = font.render(f"Iteration: {iteration_counter}", True, black)
+        screen.blit(iteration_text, (10, 10))  # Position the text in the top-left corner
+        # Update the Pygame display
+        pygame.display.update()
+
+        # Check if a solution has been found
+        if iteration_counter >= max_iterations:
+            pygame.time.wait(5000)  # Wait 5 seconds before restarting
+            break
+
+        # Wait for a short amount of time to control the frame rate
+        pygame.time.wait(100)  # Increase the delay to 100 ms for easier observation
 
 if __name__ == "__main__":
     main()
 
-
-# The constraints for the knapsack problem are the maximum capacity of the knapsack and the weight of the items
-# The fitness function enforces this constraint by checking if the total weight of the items in a solution exceeds the maximum capacity
+# from experimentation it can be seen that whilst a ga can be usd to solve the n-queen problem it may not always be optimal with the iterations often surpassing 1000.
+# It is worth noting that this program has some constraints that can affect its performance and efficiency in solving the N-Queens problem
+# have added an ELITISM  to control the number of best solutionss to preserve
+# This will help ensure that the best solution found so far is not lost due to selection, crossover, or mutation.
