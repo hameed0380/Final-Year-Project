@@ -91,7 +91,7 @@ class TSPGAGUI(tkinter.Frame):
 
     def run_interactiveGA(self):
         """Run the main function from the TSPGA_application module"""
-        subprocess.Popen(['python', 'GUI.py'])
+        subprocess.Popen(['python', 'gui.py'])
 
     def run_tsp(self):
         """Run the main function from the TSPGA_application module"""
@@ -99,11 +99,11 @@ class TSPGAGUI(tkinter.Frame):
 
     def run_knapsack(self):
         """Run the main function from the Knapsack_application module"""
-        subprocess.Popen(['python', 'knap.py'])
+        subprocess.Popen(['python', 'Knapsackga.py'])
 
     def run_nqueen(self):
         """Run the main function from the Nqueen_application module"""
-        subprocess.Popen(['python', 'qN.py'])
+        subprocess.Popen(['python', 'queen_ga.py'])
 
 def run_gui():
     # Create the root GUI window
