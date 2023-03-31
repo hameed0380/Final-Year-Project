@@ -1,4 +1,4 @@
-# Import everything from tkinter and the font module
+# Import everything from tkinter and the font module.
 import tkinter
 from tkinter import ttk
 from ttkthemes import ThemedTk
