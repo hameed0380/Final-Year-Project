@@ -1,79 +1,82 @@
 import pygame
 import random
 import sys
+import numpy as np
 
 # Constants
-BOARD_SIZE = 8
-POPULATION_SIZE = 100
-MUTATION_RATE = 0.1
-WINDOW_SIZE = (480, 480)
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-BROWN = (139, 69, 19)
-RED = (255, 0, 0)
-ELITISM_COUNT = 2 # Elitism -> per
+board = 8
+population_size = 100
+mutation_rate = 0.1
+size_window = (480, 480)
+red = (255, 0, 0)
+white = (255, 255, 255)
+black = (0, 0, 0)
+brown = (139, 69, 19)
+elitism_cnt = 2 # Elitism -> per
 max_iterations = 1000
+k = 2 # tournament size
 
-# Load the queen image
+# Load the queen image adn scale to tile
 queen_image = pygame.image.load('queen1.png')
-queen_image = pygame.transform.scale(queen_image, (WINDOW_SIZE[0] // BOARD_SIZE, WINDOW_SIZE[1] // BOARD_SIZE))
+queen_image = pygame.transform.scale(queen_image, (size_window[0] // board, size_window[1] // board))
 
 # Initialize Pygame
 pygame.init()
-screen = pygame.display.set_mode(WINDOW_SIZE)
+screen = pygame.display.set_mode(size_window)
 pygame.display.set_caption("N-Queens Problem with Genetic Algorithm")
 
-# Define the fitness function
-def fitness(chromosome):
-    conflicts = 0
-    for i in range(BOARD_SIZE):
-        for j in range(i + 1, BOARD_SIZE):
-            if chromosome[i] == chromosome[j]:
-                conflicts += 1
-            elif abs(chromosome[i] - chromosome[j]) == j - i:
-                conflicts += 1
-    return 1 / (conflicts + 1)
+# computes score for each chromosome(solution) in the population
+def fitness(solutions):
+    threat = 0 # threat counter
+    # Count for when pieces threaten each other
+    for i in range(board):
+        for j in range(i + 1, board):
+            if solutions[i] == solutions[j]:
+                threat += 1
+            elif abs(solutions[i] - solutions[j]) == j - i:
+                threat += 1
+    return 1 / (threat + 1)
 
-# Define the selection function
-def selection(population):
-    # Roulette wheel selection
-    fitness_sum = sum(fitness(chromosome) for chromosome in population)
-    selection_probs = [fitness(chromosome) / fitness_sum for chromosome in population]
-    parent1 = random.choices(population, weights=selection_probs)[0]
-    parent2 = random.choices(population, weights=selection_probs)[0]
-    return parent1, parent2
 
-# Define the crossover function
-def crossover(parent1, parent2):
-    # Single-point crossover
-    crossover_point = random.randint(1, BOARD_SIZE - 1)
-    child1 = parent1[:crossover_point] + parent2[crossover_point:]
-    child2 = parent2[:crossover_point] + parent1[crossover_point:]
-    return child1, child2
+def selection(population, k):
+    # k individuals from population selected and perform a tournament amongst them
+    tournament = random.sample(population, k)
+    parent_a = max(tournament, key=lambda solutions: fitness(solutions))
+    tournament = random.sample(population, k)
+    parent_b = max(tournament, key=lambda solutions: fitness(solutions))
+    return parent_a, parent_b
+
+# Single point crossover function combines two parent to create two offspring solutions (recycled)
+# crossover point randomly generated which determines the point for exchange of information between parents to form offspring
+def crossover(parent_a, parent_b):
+    x = random.randint(1, len(parent_a)-1)
+    Offspring1 = np.append(parent_a[:x] , parent_b[x:])
+    Offspring2 = np.append(parent_b[:x] , parent_a[x:])
+    return Offspring1, Offspring2
 
 # Define the mutation function
-def mutation(chromosome):
-    # Convert the chromosome tuple to a list
-    chromosome = list(chromosome)
+def mutation(solutions):
+    # Convert the solutions tuple to a list
+    solutions = list(solutions)
     
-    # Swap two random positions in the chromosome
-    i = random.randint(0, BOARD_SIZE - 1)
-    j = random.randint(0, BOARD_SIZE - 1)
-    chromosome[i], chromosome[j] = chromosome[j], chromosome[i]
+    # Swap two random positions in the solutions
+    i = random.randint(0, board - 1)
+    j = random.randint(0, board - 1)
+    solutions[i], solutions[j] = solutions[j], solutions[i]
     
-    # Convert the chromosome list back to a tuple and return it
-    return tuple(chromosome)
+    # Convert the solutions list back to a tuple and return it
+    return tuple(solutions)
 
 
 # Generate the initial population
-population = [tuple(random.randint(0, BOARD_SIZE - 1) for i in range(BOARD_SIZE)) for j in range(POPULATION_SIZE)]
+population = [tuple(random.randint(0, board - 1) for i in range(board)) for j in range(population_size)]
 
 
 # Initialize font system
 pygame.font.init()
 font = pygame.font.Font(None, 36)  # Choose the font and size
 
-# Main loop
+# Main loop to run ga
 def main():
     iteration_counter = 0
     global population
@@ -88,41 +91,41 @@ def main():
         iteration_counter += 1
         # Run one iteration of the genetic algorithm
         # Select two parents
-        parent1, parent2 = selection(population)
+        parent_a, parent_b = selection(population, k)
 
         # Create two children through crossover
-        child1, child2 = crossover(parent1, parent2)
+        Offspring1, Offspring2 = crossover(parent_a, parent_b)
 
         # Mutate the children
-        child1 = mutation(child1)
-        child2 = mutation(child2)
+        Offspring1 = mutation(Offspring1)
+        Offspring2 = mutation(Offspring2)
 
-        # Replace two least fit chromosomes with the children
-        population = sorted(population, key=lambda chromosome: fitness(chromosome))
-        population = population[:ELITISM_COUNT] + population[ELITISM_COUNT + 2:] # preserving the best chromosomes (elitism)
-        population.append(child1)
-        population.append(child2)
+        # Replace two least fit solutionss with the children
+        population = sorted(population, key=lambda solutions: fitness(solutions))
+        population = population[:elitism_cnt] + population[elitism_cnt + 2:] # preserving the best solutionss (elitism)
+        population.append(Offspring1)
+        population.append(Offspring2)
 
         # Draw the chessboard and the best candidate
-        square_size = WINDOW_SIZE[0] // BOARD_SIZE
-        screen.fill(WHITE)
+        square_size = size_window[0] // board
+        screen.fill(white)
 
         # Draw the chessboard
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
+        for i in range(board):
+            for j in range(board):
                 if (i + j) % 2 == 0:
-                    color = BROWN
+                    color = brown
                 else:
-                    color = WHITE
+                    color = white
                 pygame.draw.rect(screen, color, (i * square_size, j * square_size, square_size, square_size))
 
         # Draw the queens for the best candidate
-        best_chromosome = max(population, key=lambda c: fitness(c))
-        for i in range(BOARD_SIZE):
-            screen.blit(queen_image, (i * square_size, best_chromosome[i] * square_size))
+        best_solutions = max(population, key=lambda c: fitness(c))
+        for i in range(board):
+            screen.blit(queen_image, (i * square_size, best_solutions[i] * square_size))
         
         iteration_counter += 1
-        iteration_text = font.render(f"Iteration: {iteration_counter}", True, BLACK)
+        iteration_text = font.render(f"Iteration: {iteration_counter}", True, black)
         screen.blit(iteration_text, (10, 10))  # Position the text in the top-left corner
         # Update the Pygame display
         pygame.display.update()
@@ -140,5 +143,5 @@ if __name__ == "__main__":
 
 # from experimentation it can be seen that whilst a ga can be usd to solve the n-queen problem it may not always be optimal with the iterations often surpassing 1000.
 # It is worth noting that this program has some constraints that can affect its performance and efficiency in solving the N-Queens problem
-# have added an ELITISM  to control the number of best chromosomes to preserve
+# have added an ELITISM  to control the number of best solutionss to preserve
 # This will help ensure that the best solution found so far is not lost due to selection, crossover, or mutation.
