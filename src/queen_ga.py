@@ -145,3 +145,4 @@ if __name__ == "__main__":
 # It is worth noting that this program has some constraints that can affect its performance and efficiency in solving the N-Queens problem
 # have added an ELITISM  to control the number of best solutionss to preserve
 # This will help ensure that the best solution found so far is not lost due to selection, crossover, or mutation.
+# tournament selction proved to be more advantages in this case, I found that the n-queens was solved much quicker.

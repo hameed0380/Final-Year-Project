@@ -138,7 +138,7 @@ class GenAlgorithm:
 # Not sure the particular video but I borrowed some ideas from here: https://www.youtube.com/watch?v=JWPgodXQLV4
 # MATLAB: https://uk.mathworks.com/help/gads/gamultiobj-plot-vectorize.html - similar idea to Ciesielcz
 
-
+# Experimentation with different constants unfortunately conflicting at times particularly with float values
 # def main():
 #     var_count = 2
 #     pop_size = 100

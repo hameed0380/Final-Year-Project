@@ -10,8 +10,8 @@ capacity = 0  # Stores maximum capacity of the knapsack
 population_size = 50 # num of solutions in the population
 generation_nums = 100 # num of generations for the genetic algorithm
 mutation_prob = 0.1 # Probability of mutation
-bg_colour = (0, 0, 0)
-white = (255, 255, 255)
+bg_colour = (0, 0, 0) # background colour
+white = (255, 255, 255) # standard colour
 
 
 pygame.init() # Pygame initialization
@@ -236,3 +236,4 @@ if __name__ == "__main__":
 # Developed using some ideas of knapsack_ga with modifications
 # Constraints put in place for this program are maximum capacity of the knapsack and weight of the items that are generated
 # Fitness function utilises this constraint by checking if  total weight of the items in a solution exceed the maximum capacity
+# Experimented with different methods
